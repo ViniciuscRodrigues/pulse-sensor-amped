@@ -1,0 +1,34 @@
+# .github/workflows/compile.yml
+name: ESP32 Build Check
+
+on:
+  push:
+    paths:
+      - "esp32/**"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Cache PlatformIO
+        uses: actions/cache@v3
+        with:
+          path: ~/.platformio
+          key: ${{ runner.os }}-pio
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Install PlatformIO
+        run: pip install --upgrade platformio
+      - name: Compile ESP32 Firmware
+        run: cd esp32 && pio run

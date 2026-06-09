@@ -1,0 +1,14 @@
+# Ambientes de compilação
+.vscode/
+.pio/
+build/
+
+# Binários
+*.bin
+*.elf
+*.hex
+*.uf2
+
+# Arquivos de OS
+.DS_Store
+Thumbs.db

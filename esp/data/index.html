@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Monitor Cardíaco IoT</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body
+        class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-6"
+    >
+        <div
+            class="max-w-3xl w-full bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-700"
+        >
+            <h1
+                class="text-3xl font-bold text-emerald-400 mb-6 flex items-center gap-3"
+            >
+                <span class="animate-pulse">🫀</span> Monitor PPG ESP32
+            </h1>
+
+            <div class="grid grid-cols-2 gap-6 mb-8">
+                <div
+                    class="bg-slate-700 p-6 rounded-xl text-center shadow-inner"
+                >
+                    <p
+                        class="text-slate-400 text-sm uppercase tracking-wider font-semibold"
+                    >
+                        BPM Atual
+                    </p>
+                    <p class="text-6xl font-bold text-rose-500 mt-2" id="bpm">
+                        --
+                    </p>
+                </div>
+                <div
+                    class="bg-slate-700 p-6 rounded-xl text-center shadow-inner"
+                >
+                    <p
+                        class="text-slate-400 text-sm uppercase tracking-wider font-semibold"
+                    >
+                        IBI (ms)
+                    </p>
+                    <p class="text-6xl font-bold text-blue-400 mt-2" id="ibi">
+                        --
+                    </p>
+                </div>
+            </div>
+
+            <div
+                class="bg-slate-900 rounded-xl p-4 shadow-inner border border-slate-700"
+            >
+                <canvas id="chart" class="w-full h-64"></canvas>
+            </div>
+        </div>
+
+        <script>
+            const ctx = document.getElementById("chart").getContext("2d");
+            const chart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: Array(200).fill(""),
+                    datasets: [
+                        {
+                            label: "Sinal Fotopletismográfico (PPG)",
+                            data: Array(200).fill(0),
+                            borderColor: "#10b981", // Emerald 500 Tailwind
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            tension: 0.3,
+                        },
+                    ],
+                },
+                options: {
+                    animation: false,
+                    scales: {
+                        x: { display: false },
+                        y: {
+                            display: true,
+                            min: 0,
+                            max: 4095,
+                            grid: { color: "#334155" },
+                        },
+                    },
+                    plugins: { legend: { labels: { color: "#cbd5e1" } } },
+                },
+            });
+
+            const gateway = `ws://${window.location.hostname}/ws`;
+            const websocket = new WebSocket(gateway);
+
+            websocket.onmessage = function (event) {
+                const data = JSON.parse(event.data);
+
+                document.getElementById("bpm").innerHTML = data.bpm;
+                document.getElementById("ibi").innerHTML = data.ibi;
+
+                // Atualiza o gráfico deslocando os dados
+                chart.data.datasets[0].data.shift();
+                chart.data.datasets[0].data.push(data.signal);
+                chart.update();
+            };
+        </script>
+    </body>
+</html>

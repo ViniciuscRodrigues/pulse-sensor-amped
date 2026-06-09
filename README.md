@@ -30,6 +30,6 @@ Para aprofundamento na física do sensor, calibração óptica e download das fe
 
 ## 🏗️ Análise de Arquitetura do Código Base (Arduino)
 
-O firmware original (`pulsesensor.txt`) opera utilizando uma abordagem orientada a **Interrupções de Temporizador (Timer Interrupts)**. Isso remove o peso do processamento analógico do laço de execução principal (`loop()`), blindando a amostragem contra atrasos causados por funções bloqueantes.
+O firmware original (`pulse_sensor_uno.ino`) opera utilizando uma abordagem orientada a **Interrupções de Temporizador (Timer Interrupts)**. Isso remove o peso do processamento analógico do laço de execução principal (`loop()`), blindando a amostragem contra atrasos causados por funções bloqueantes.
 
 ### Diagrama de Pinagem Padrão

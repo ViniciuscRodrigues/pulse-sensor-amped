@@ -1,9 +1,10 @@
-/* Autor: Joel Murphy e Yury Gitman  || visite o site: http://www.pulsesensor.com
-----------------------  Observações ----------------------
-Para mais informações sobre o projeto acesse:
-https://github.com/WorldFamousElectronics/PulseSensor_Amped_Arduino/blob/master/README.md
- ---------------------------------------------------------
-*/
+// Autor: Joel Murphy e Yury Gitman  || visite o site: http://www.pulsesensor.com
+//
+// ----------------------  Observações ----------------------------------------------------------
+// Para mais informações sobre o projeto acesse:
+// https://github.com/WorldFamousElectronics/PulseSensor_Amped_Arduino/blob/master/README.md
+// ----------------------------------------------------------------------------------------------
+
 
 #define PROCESSING_VISUALIZER 1
 #define SERIAL_PLOTTER  2

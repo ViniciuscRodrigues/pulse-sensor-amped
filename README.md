@@ -13,7 +13,6 @@ Este repositório contém a documentação técnica, análise de engenharia de f
 2. [Análise de Arquitetura do Código Base (Arduino)](#-análise-de-arquitetura-do-código-base-arduino)
 3. [Migração de Arquitetura: Implementação no ESP32](#-migração-de-arquitetura-implementação-no-esp32)
 4. [Construção de Interfaces Gráficas (GUI) no ESP32](#-construção-de-interfaces-gráficas-gui-no-esp32)
-5. [Como Contribuir](#-como-contribuir)
 
 ---
 
@@ -30,8 +29,8 @@ Para aprofundamento na física do sensor, calibração óptica e download das fe
 
 ## 🏗️ Análise de Arquitetura do Código Base (Arduino)
 
-O firmware original (`pulse_sensor_uno.ino`) opera utilizando uma abordagem orientada a **Interrupções de Temporizador (Timer Interrupts)**. Isso remove o peso do processamento analógico do laço de execução principal (`loop()`), blindando a amostragem contra atrasos causados por funções bloqueantes.
+O firmware original [pulse_sensor_uno.ino](arduino/pulse_sensor_uno.ino) opera utilizando uma abordagem orientada a **Interrupções de Temporizador (Timer Interrupts)**. Isso remove o peso do processamento analógico do laço de execução principal (`loop()`), blindando a amostragem contra atrasos causados por funções bloqueantes.
 
-### Diagrama de Pinagem Padrão
+### Diagrama de Pinagem Padrão no ESP32
 
 ![Diagrama de Pinagem ESP32](docs/pinout_esp32.jpg)
